@@ -26,6 +26,12 @@ export const env = {
   // defaulted — CORS with a wrong or missing origin fails in a way that's
   // confusing to debug, so we'd rather fail at boot than at request time.
   clientOrigin: required("CLIENT_ORIGIN"),
+
+  // Signs and verifies login sessions (see src/lib/jwt.ts). Required, not
+  // defaulted — a fallback secret here would mean every deploy that forgets
+  // to set this env var silently shares one hardcoded key, which anyone who
+  // reads the source code could use to forge a login for any user.
+  jwtSecret: required("JWT_SECRET"),
 } as const;
 
 export const isProduction = env.nodeEnv === "production";

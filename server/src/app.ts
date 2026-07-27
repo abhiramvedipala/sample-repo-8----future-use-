@@ -12,6 +12,7 @@ import cors from "cors";
 import express from "express";
 import { env } from "./lib/env.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { authRouter } from "./routes/auth.js";
 import { healthRouter } from "./routes/health.js";
 
 export const app = express();
@@ -62,7 +63,7 @@ app.use(cookieParser());
 // ---- Routes -------------------------------------------------------------
 
 app.use(healthRouter);
-// Step 4 adds: app.use("/api/auth", authRouter);
+app.use("/api/auth", authRouter);
 // Step 5 adds: app.use("/api/applications", applicationsRouter);
 
 // ---- Error handling -------------------------------------------------------
