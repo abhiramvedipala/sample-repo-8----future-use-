@@ -58,6 +58,26 @@ npm install
 npm run dev               # http://localhost:5173
 ```
 
+## Database
+
+The schema lives in `server/prisma/schema.prisma` and is the single source of
+truth. Migrations in `server/prisma/migrations/` are committed to git — that
+directory is the database's version history, and it replays in order on any
+environment.
+
+```bash
+cd server
+npm run db:migrate     # after editing schema.prisma: create + apply a migration
+npm run db:generate    # regenerate the typed client only
+npm run db:studio      # browse the data in a GUI
+npm run db:reset       # DESTRUCTIVE: drop everything and replay all migrations
+```
+
+Development uses a local PostgreSQL database. Production uses Neon, and gets
+the exact same migration files applied via `npm run db:deploy` during the
+Railway build. `prisma generate` also runs on `postinstall` and before every
+build, so the generated client is never stale and never committed.
+
 ## Environment variables
 
 Never commit real values. `.env` is gitignored; `.env.example` documents the
@@ -69,7 +89,7 @@ therefore **public**. Secrets belong only in `server/.env`.
 ## Build progress
 
 - [x] 1. Repo structure, package setup, Git, .gitignore, env files
-- [ ] 2. Prisma schema + Neon connection + first migration
+- [x] 2. Prisma schema + first migration
 - [ ] 3. Express server skeleton, health route, CORS, error middleware
 - [ ] 4. Auth: register, login, logout, session check
 - [ ] 5. Applications CRUD API with Zod validation

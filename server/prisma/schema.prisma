@@ -1,0 +1,99 @@
+// ---------------------------------------------------------------------------
+// Prisma schema — the single source of truth for the database.
+//
+// Two things are generated from this file:
+//   1. SQL migration files  (npm run db:migrate)  -> shape of the real tables
+//   2. A typed TypeScript client (npm run db:generate)
+//
+// Change this file, then run a migration. Never edit the database by hand:
+// if the schema and the database disagree, Prisma's types start lying to you.
+// ---------------------------------------------------------------------------
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// The stages an application moves through.
+//
+// This is a Postgres ENUM, not a plain string column. The database itself
+// rejects any value outside this list, so a bug in the API can never write
+// status = "Intreview". Constraints belong as close to the data as possible.
+enum ApplicationStatus {
+  APPLIED
+  OA
+  INTERVIEW
+  OFFER
+  REJECTED
+}
+
+model User {
+  id String @id @default(cuid())
+
+  // @unique creates a UNIQUE INDEX. It does two jobs at once: it makes
+  // "one account per email" a rule the database enforces even under
+  // concurrent signups, and it makes login lookups fast.
+  email String @unique
+
+  // The plaintext password is NEVER stored — not in a column, not in a log.
+  // Step 4 stores a bcrypt hash here. The name says "Hash" on purpose so
+  // nobody is tempted to compare it directly to user input.
+  passwordHash String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // The other half of the relation defined on Application.user.
+  // This field creates no column; it exists so you can write
+  // prisma.user.findUnique({ include: { applications: true } }).
+  applications Application[]
+
+  @@map("users")
+}
+
+model Application {
+  id String @id @default(cuid())
+
+  // ---- ownership -------------------------------------------------------
+  // Every application belongs to exactly one user. This is the foreign key
+  // that makes the whole app multi-tenant: every query in step 5 filters on
+  // userId, so one user can never read another user's applications.
+  //
+  // onDelete: Cascade means "if the user row is deleted, delete their
+  // applications too". Without it, Postgres would refuse to delete a user
+  // who still has applications, because the foreign key would dangle.
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // ---- the data the user actually types --------------------------------
+  company String
+  role    String
+
+  // `?` means NULL is allowed. A job link and notes are genuinely optional;
+  // company and role are not. Optionality is a real modelling decision, not
+  // a formality — it becomes `string | null` in TypeScript and forces the
+  // frontend to handle the empty case.
+  jobLink String?
+
+  status      ApplicationStatus @default(APPLIED)
+  appliedDate DateTime
+  notes       String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // ---- indexes ---------------------------------------------------------
+  // An index is a lookup structure the database maintains so it can find
+  // rows without scanning the whole table. These two match the queries the
+  // app will actually run:
+  //   - the list page, filtered by status -> (userId, status)
+  //   - the list page, sorted by date     -> (userId, appliedDate)
+  // Both lead with userId because every query is scoped to one user.
+  @@index([userId, status])
+  @@index([userId, appliedDate])
+  @@map("applications")
+}

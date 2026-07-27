@@ -5,6 +5,12 @@ node_modules/
 dist/
 build/
 
+# Prisma's generated client. Regenerated from schema.prisma by `prisma
+# generate`, which runs automatically on npm install (postinstall) and before
+# every build. Committing it would mean reviewing thousands of lines of
+# machine-written code on every schema change.
+server/src/generated/
+
 # Environment files.
 # Real values live in .env and MUST NOT be committed.
 # The .example files ARE committed so the shape of the config is documented.
