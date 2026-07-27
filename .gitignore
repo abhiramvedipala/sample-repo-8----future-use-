@@ -3,7 +3,9 @@ node_modules/
 
 # Build output (generated from source — never commit these)
 dist/
+dist-ssr/
 build/
+*.local
 
 # Prisma's generated client. Regenerated from schema.prisma by `prisma
 # generate`, which runs automatically on npm install (postinstall) and before

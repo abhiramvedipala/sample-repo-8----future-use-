@@ -36,7 +36,15 @@ vs. a stranger's browser) and must not share a dependency tree.
 │   ├── package.json
 │   ├── tsconfig.json
 │   └── .env.example
-└── client/          React app (scaffolded with Vite in step 6)
+└── client/          React app (Vite + Tailwind + shadcn/ui + React Router)
+    ├── src/
+    │   ├── components/  ui/ (shadcn, CLI-managed) + layout/ (hand-written)
+    │   ├── pages/
+    │   ├── lib/
+    │   ├── App.tsx      route table
+    │   └── main.tsx      entry point, wraps App in BrowserRouter
+    ├── package.json
+    ├── vite.config.ts
     └── .env.example
 ```
 
@@ -51,7 +59,7 @@ cp .env.example .env      # then fill in the real values
 npm install
 npm run dev               # http://localhost:4000
 
-# Terminal 2 — web app (available from step 6 onward)
+# Terminal 2 — web app
 cd client
 cp .env.example .env
 npm install
@@ -93,7 +101,7 @@ therefore **public**. Secrets belong only in `server/.env`.
 - [x] 3. Express server skeleton, health route, CORS, error middleware
 - [x] 4. Auth: register, login, logout, session check
 - [x] 5. Applications CRUD API with Zod validation
-- [ ] 6. Frontend scaffold: Vite, Tailwind, shadcn, routing
+- [x] 6. Frontend scaffold: Vite, Tailwind, shadcn, routing
 - [ ] 7. Auth UI + protected routes + TanStack Query
 - [ ] 8. Applications list, filters, create/edit forms
 - [ ] 9. Dashboard with stats

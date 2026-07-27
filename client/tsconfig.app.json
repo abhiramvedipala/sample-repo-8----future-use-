@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "esnext",
+    "types": ["vite/client"],
+    "allowArbitraryExtensions": true,
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Linting */
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+
+    /* Lets imports say "@/components/ui/button" instead of a relative path
+       like "../../../components/ui/button" that breaks the moment a file
+       moves. "@" is just a convention (not a Node/TS built-in) — Vite's
+       config below is what actually makes it resolve. No "baseUrl" needed
+       here: with moduleResolution "bundler", "paths" resolves relative to
+       this file on its own (baseUrl is deprecated as of TS 6 for this
+       mode). The root tsconfig.json duplicates this WITH baseUrl — the
+       shadcn CLI's alias resolver reads that file specifically and needs
+       it in the older baseUrl+paths form to work out where "@" points. */
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src"]
+}
