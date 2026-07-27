@@ -90,7 +90,7 @@ therefore **public**. Secrets belong only in `server/.env`.
 
 - [x] 1. Repo structure, package setup, Git, .gitignore, env files
 - [x] 2. Prisma schema + first migration
-- [ ] 3. Express server skeleton, health route, CORS, error middleware
+- [x] 3. Express server skeleton, health route, CORS, error middleware
 - [ ] 4. Auth: register, login, logout, session check
 - [ ] 5. Applications CRUD API with Zod validation
 - [ ] 6. Frontend scaffold: Vite, Tailwind, shadcn, routing
