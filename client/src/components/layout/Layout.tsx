@@ -9,7 +9,9 @@
 // show a full document request) instead of just re-rendering a component.
 // ---------------------------------------------------------------------------
 
-import { NavLink, Outlet } from 'react-router'
+import { NavLink, Outlet, useNavigate } from 'react-router'
+import { Button } from '@/components/ui/button'
+import { useCurrentUser, useLogout } from '@/features/auth/hooks'
 import { cn } from '@/lib/utils'
 
 const navItems = [
@@ -19,6 +21,20 @@ const navItems = [
 ]
 
 export function Layout() {
+  // Every page shares this ONE call, because TanStack Query caches the
+  // result under the shared "auth","me" key — Login, RequireAuth, and this
+  // nav bar are all reading the same cached value, not each firing their
+  // own request to the server.
+  const { data: user, isPending } = useCurrentUser()
+  const logout = useLogout()
+  const navigate = useNavigate()
+
+  function handleLogout() {
+    logout.mutate(undefined, {
+      onSuccess: () => navigate('/'),
+    })
+  }
+
   return (
     <div className="min-h-svh bg-background text-foreground">
       <header className="border-b border-border">
@@ -51,19 +67,35 @@ export function Layout() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2">
-            <NavLink
-              to="/login"
-              className="text-sm font-medium text-muted-foreground hover:text-foreground"
-            >
-              Log in
-            </NavLink>
-            <NavLink
-              to="/register"
-              className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-            >
-              Sign up
-            </NavLink>
+          <div className="flex items-center gap-3">
+            {isPending ? null : user ? (
+              <>
+                <span className="text-sm text-muted-foreground">{user.email}</span>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleLogout}
+                  disabled={logout.isPending}
+                >
+                  Log out
+                </Button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground"
+                >
+                  Log in
+                </NavLink>
+                <NavLink
+                  to="/register"
+                  className="rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+                >
+                  Sign up
+                </NavLink>
+              </>
+            )}
           </div>
         </nav>
       </header>

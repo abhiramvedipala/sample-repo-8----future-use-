@@ -102,7 +102,7 @@ therefore **public**. Secrets belong only in `server/.env`.
 - [x] 4. Auth: register, login, logout, session check
 - [x] 5. Applications CRUD API with Zod validation
 - [x] 6. Frontend scaffold: Vite, Tailwind, shadcn, routing
-- [ ] 7. Auth UI + protected routes + TanStack Query
+- [x] 7. Auth UI + protected routes + TanStack Query
 - [ ] 8. Applications list, filters, create/edit forms
 - [ ] 9. Dashboard with stats
 - [ ] 10. Deploy all three pieces

@@ -1,8 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-// Placeholder — step 7 makes this a PROTECTED route, step 8 fills it with
-// the real list, filters/sort, and create/edit forms wired to the
-// applications CRUD API built in step 5.
+// The real list, filters/sort, and create/edit forms arrive in step 8,
+// wired to the applications CRUD API built in step 5. This route is already
+// protected — see RequireAuth in App.tsx.
 export function Applications() {
   return (
     <Card>
@@ -13,8 +13,8 @@ export function Applications() {
         </CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">
-        This route exists so navigation works end to end. Step 7 will make it
-        require login first.
+        This route is protected — you can only see this because you're
+        logged in.
       </CardContent>
     </Card>
   )

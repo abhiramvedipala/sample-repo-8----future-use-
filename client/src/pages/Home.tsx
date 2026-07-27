@@ -1,10 +1,13 @@
 import { Link } from 'react-router'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useCurrentUser } from '@/features/auth/hooks'
 
 const pipeline = ['Applied', 'OA', 'Interview', 'Offer / Rejected']
 
 export function Home() {
+  const { data: user } = useCurrentUser()
+
   return (
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-3">
@@ -16,12 +19,20 @@ export function Home() {
           progress at a glance.
         </p>
         <div className="flex gap-3 pt-2">
-          <Button asChild>
-            <Link to="/register">Get started</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link to="/login">I already have an account</Link>
-          </Button>
+          {user ? (
+            <Button asChild>
+              <Link to="/dashboard">Go to dashboard</Link>
+            </Button>
+          ) : (
+            <>
+              <Button asChild>
+                <Link to="/register">Get started</Link>
+              </Button>
+              <Button asChild variant="outline">
+                <Link to="/login">I already have an account</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
 

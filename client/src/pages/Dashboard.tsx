@@ -1,9 +1,13 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useCurrentUser } from '@/features/auth/hooks'
 
-// Placeholder — step 7 makes this a PROTECTED route (redirect to /login if
-// not authenticated), step 9 fills it with real counts-per-status and
-// applications-per-week stats pulled from the API.
+// Real stats arrive in step 9 (counts per status, applications per week).
+// This route is already protected — see RequireAuth in App.tsx — so by the
+// time this component renders, useCurrentUser() is guaranteed to have a
+// logged-in user.
 export function Dashboard() {
+  const { data: user } = useCurrentUser()
+
   return (
     <Card>
       <CardHeader>
@@ -13,8 +17,8 @@ export function Dashboard() {
         </CardDescription>
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">
-        This route exists so navigation works end to end. Step 7 will make it
-        require login first.
+        Logged in as {user?.email}. Only reachable while authenticated — try
+        logging out and visiting /dashboard directly.
       </CardContent>
     </Card>
   )
