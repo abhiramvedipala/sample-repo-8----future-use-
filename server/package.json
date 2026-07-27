@@ -1,0 +1,21 @@
+{
+  "name": "job-app-tracker-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Express + TypeScript API for the Job Application Tracker",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
+  }
+}

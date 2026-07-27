@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    /* What JS features can the output use?
+       Node 20+ supports everything in ES2022, so we don't down-compile. */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+
+    /* Which ambient/global type packages to load from node_modules/@types.
+       We list "node" explicitly so that globals like `console`, `process`
+       and `Buffer` are typed. Being explicit (rather than relying on
+       auto-discovery) also means a test framework's globals can't silently
+       leak into application code later. */
+    "types": ["node"],
+
+    /* Use Node's native ES module system (import/export), matching
+       "type": "module" in package.json. Consequence: relative imports must
+       include a .js extension, e.g. import { x } from "./thing.js" — even
+       though the source file is thing.ts. That's Node's rule, not TypeScript
+       being difficult: at runtime the file really is thing.js. */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    /* npm run build compiles src/*.ts -> dist/*.js */
+    "rootDir": "src",
+    "outDir": "dist",
+
+    /* Turns on every type-safety check, including strict null checks.
+       This is what makes TypeScript actually worth using. */
+    "strict": true,
+
+    /* Lets us `import express from "express"` for packages that were
+       written as CommonJS. */
+    "esModuleInterop": true,
+
+    /* Don't type-check inside node_modules — big speedup, no downside. */
+    "skipLibCheck": true,
+
+    /* Prevents "works on my Mac, breaks on Linux" import-casing bugs. */
+    "forceConsistentCasingInFileNames": true,
+
+    /* Stack traces point at the .ts source line, not the compiled .js. */
+    "sourceMap": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

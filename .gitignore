@@ -1,0 +1,31 @@
+# Dependencies (reinstallable from package-lock.json — never commit these)
+node_modules/
+
+# Build output (generated from source — never commit these)
+dist/
+build/
+
+# Environment files.
+# Real values live in .env and MUST NOT be committed.
+# The .example files ARE committed so the shape of the config is documented.
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editor / OS noise
+.DS_Store
+.idea/
+
+# Tool caches
+.vite/
+coverage/
+
+# Deploy platform local state
+.vercel/
