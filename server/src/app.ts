@@ -12,6 +12,7 @@ import cors from "cors";
 import express from "express";
 import { env } from "./lib/env.js";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler.js";
+import { applicationsRouter } from "./routes/applications.js";
 import { authRouter } from "./routes/auth.js";
 import { healthRouter } from "./routes/health.js";
 
@@ -64,7 +65,7 @@ app.use(cookieParser());
 
 app.use(healthRouter);
 app.use("/api/auth", authRouter);
-// Step 5 adds: app.use("/api/applications", applicationsRouter);
+app.use("/api/applications", applicationsRouter);
 
 // ---- Error handling -------------------------------------------------------
 //
