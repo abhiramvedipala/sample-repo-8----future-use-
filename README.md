@@ -22,6 +22,8 @@ browser  --HTTP-->  server   (Express API,     port 4000)   serves JSON
 | `server` | Node.js, Express, TypeScript, Zod, Prisma                      | Railway    |
 | database | PostgreSQL                                                     | Neon       |
 
+See [DEPLOY.md](./DEPLOY.md) for the exact steps to put all three online.
+
 ## Repository layout
 
 This is one git repository containing two independent npm projects. They are
